@@ -21,10 +21,10 @@
    isAllTrue([100, 2, 3, 4, 5], n => n < 10) // вернет false (потому что как минимум первый элемент больше 10)
  */
    function isAllTrue(array, fn) {
-    if (array instanceof Array != true) {
+    if (!Array.isArray(array)) {
       throw new Error('empty array');
   
-    } else if (array.length === 0) {
+    } else if (!array.length) {
       throw new Error('empty array');
   
     } else if (typeof fn != 'function') {

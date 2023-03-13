@@ -18,6 +18,6 @@ export default {
     const photos = photosDB.get(friend.id);
     const photo = this.getRandomElement(photos);
 
-    return { friend, photo};
+    return { friend, url: photo.url};
   },
 };

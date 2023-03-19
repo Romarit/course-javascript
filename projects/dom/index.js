@@ -11,6 +11,9 @@
    createDivWithText('loftschool') // создаст элемент div, поместит в него 'loftschool' и вернет созданный элемент
  */
 function createDivWithText(text) {
+  const element = document.createElement('div');
+  element.textContent = text;
+  return element;
 }
 
 /*
@@ -22,6 +25,7 @@ function createDivWithText(text) {
    prepend(document.querySelector('#one'), document.querySelector('#two')) // добавит элемент переданный первым аргументом в начало элемента переданного вторым аргументом
  */
 function prepend(what, where) {
+  where.prepend(what);
 }
 
 /*
@@ -44,6 +48,14 @@ function prepend(what, where) {
    findAllPSiblings(document.body) // функция должна вернуть массив с элементами div и span т.к. следующим соседом этих элементов является элемент с тегом P
  */
 function findAllPSiblings(where) {
+  const arr = [];
+
+  for (const node of where.children) {
+    if (node.nextElementSibling !== null && node.nextElementSibling.nodeName === 'P') {
+      arr.push(node);
+    }
+  }
+  return arr;
 }
 
 /*
@@ -66,7 +78,7 @@ function findAllPSiblings(where) {
 function findError(where) {
   const result = [];
 
-  for (const child of where.childNodes) {
+  for (const child of where.children) {
     result.push(child.textContent);
   }
 
@@ -86,6 +98,12 @@ function findError(where) {
    должно быть преобразовано в <div></div><p></p>
  */
 function deleteTextNodes(where) {
+  for (const node of where.childNodes) {
+    if (node.nodeType === 3) {
+      where.removeChild(node);
+    }
+  }
+  return where;
 }
 
 /*
@@ -108,8 +126,41 @@ function deleteTextNodes(where) {
      texts: 3
    }
  */
-function collectDOMStat(root) {
-}
+   function collectDOMStat(root) {
+    const stats = {
+      tags: {},
+      classes: {},
+      texts: 0,
+    };
+  
+    function scan(root) {
+      for (const node of root.childNodes) {
+        if (node.nodeType === 1) {
+          if (node.tagName in stats.tags) {
+            stats.tags[node.tagName]++;
+          } else {
+            stats.tags[node.tagName] = 1;
+          }
+  
+          for (const className of node.classList) {
+            if (className in stats.classes) {
+              stats.classes[className]++;
+            } else {
+              stats.classes[className] = 1;
+            }
+          }
+  
+          scan(node);
+        } else {
+          stats.texts++;
+        }
+      }
+    }
+  
+    scan(root);
+  
+    return stats;
+  }
 
 export {
   createDivWithText,

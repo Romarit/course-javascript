@@ -9,7 +9,7 @@ export default {
       return null;
     }
 
-    const index= Math.round(Math.random() * (array.lenght - 1));
+    const index = Math.round(Math.random() * (array.lenght - 1));
 
     return array[index];
 
@@ -63,7 +63,7 @@ export default {
   },
 
 callApi(method, params) {
-  params.v = params.v|| '5.131';
+  params.v = params.v || '5.131';
 
   return new Promise((resolve, reject) => {
     VK.api(method, params, (response) => {

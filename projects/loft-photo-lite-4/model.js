@@ -1,5 +1,3 @@
-import { resolve } from "path";
-
 const PERM_FRIENDS = 2;
 const PERM_PHOTOS = 4;
 const APP_ID = 36868243;
